@@ -1,4 +1,4 @@
-package com.rockethelp;
+package alien.alienhelp;
 
 import android.os.Build;
 import android.os.Bundle;

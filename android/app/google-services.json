@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "118225334713",
+    "project_id": "alienhelp-8b3ca",
+    "storage_bucket": "alienhelp-8b3ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118225334713:android:272601c71b1bf56dd80668",
+        "android_client_info": {
+          "package_name": "alien.alienhelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118225334713-shvbueskshhj1j4u8185fopnhh9prk0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyHXxS7_FNYYsy_SAm0bMskaZ1PMtFoLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118225334713-shvbueskshhj1j4u8185fopnhh9prk0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
