@@ -156,15 +156,15 @@ export function Details() {
             />
           )}
         </CardDetails>
-      </ScrollView>
 
-      {order.status === "open" && (
-        <Button
-          title="Encerrar solicitação"
-          mt={5}
-          onPress={handleOrderClose}
-        />
-      )}
+        {order.status === "open" && (
+          <Button
+            title="Encerrar solicitação"
+            my={5}
+            onPress={handleOrderClose}
+          />
+        )}
+      </ScrollView>
     </VStack>
   );
 }

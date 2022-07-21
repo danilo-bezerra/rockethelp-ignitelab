@@ -9,7 +9,7 @@ import {
   useTheme,
   VStack,
 } from "native-base";
-import { ChatTeardropText, SignOut } from "phosphor-react-native";
+import { ChatTeardropText, SignOut, UserCircle } from "phosphor-react-native";
 import { useContext, useEffect, useState } from "react";
 import Logo from "../assets/logo_secondary.svg";
 import { Button } from "../components/Button";
@@ -91,12 +91,19 @@ export function Home() {
         pb={5}
         px={6}
       >
-        <Logo />
+        <Logo height="100%" />
 
-        <IconButton
-          onPress={handleLogout}
-          icon={<SignOut size={26} color={colors.gray[300]} />}
-        />
+        <HStack>
+          <IconButton
+            onPress={() => alert("Em breve")}
+            icon={<UserCircle size={32} color={colors.gray[300]} />}
+          />
+
+          <IconButton
+            onPress={handleLogout}
+            icon={<SignOut size={26} color={colors.gray[300]} />}
+          />
+        </HStack>
       </HStack>
 
       <VStack flex={1} px={6}>

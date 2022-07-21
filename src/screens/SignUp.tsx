@@ -34,9 +34,9 @@ export function SignUp() {
 
   function handleSignUp() {
     if (!email || !password) {
-      return Alert.alert("Cadastrar", "E-mail e senha devem ser informados");
+      return Alert.alert("Cadastro", "E-mail e senha devem ser informados");
     } else if (password != passwordConfirmation) {
-      return Alert.alert("Cadastrar", "As senhas informadas sãp diferentes");
+      return Alert.alert("Cadastro", "As senhas informadas sãp diferentes");
     }
     setIsLoading(true);
 
@@ -50,16 +50,16 @@ export function SignUp() {
         setIsLoading(false);
 
         if (error.code == "auth/invalid-email") {
-          return Alert.alert("Registrar", "E-mail inválido.");
+          return Alert.alert("Cadastro", "E-mail inválido.");
         }
 
         //auth/email-already-in-use
 
         if (error.code == "auth/email-already-in-use") {
-          return Alert.alert("Registrar", "E-mail já cadastrado.");
+          return Alert.alert("Cadastro", "E-mail já cadastrado.");
         }
 
-        return Alert.alert("Registar", "Não foi possível registrar.");
+        return Alert.alert("Cadastro", "Não foi possível registrar.");
       });
   }
 
@@ -135,7 +135,7 @@ export function SignUp() {
       />
 
       <Button
-        title="Entrar"
+        title="Cadastrar"
         w="full"
         onPress={handleSignUp}
         isLoading={isLoading}
