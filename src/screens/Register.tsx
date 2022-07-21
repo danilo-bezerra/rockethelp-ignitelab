@@ -3,10 +3,11 @@ import { VStack } from "native-base";
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Alert } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../contexts/UserContext";
 
 export function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ export function Register() {
   const [description, setDescription] = useState("");
 
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
 
   function handleNewOrderRegister() {
     if (!patrimony || !description) {
@@ -23,13 +25,14 @@ export function Register() {
     firestore()
       .collection("orders")
       .add({
+        user_id: user?.uid,
         patrimony,
         description,
         status: "open",
         created_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        Alert.alert("Solicitação", "Solicitação registrada con sucesso.");
+        Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
         navigation.goBack();
       })
       .catch((error) => {

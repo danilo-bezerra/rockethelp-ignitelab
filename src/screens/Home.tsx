@@ -10,7 +10,7 @@ import {
   VStack,
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Logo from "../assets/logo_secondary.svg";
 import { Button } from "../components/Button";
 import { Filter } from "../components/Filter";
@@ -21,6 +21,7 @@ import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
+import { UserContext } from "../contexts/UserContext";
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,8 +31,8 @@ export function Home() {
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
   const navigation = useNavigation();
-
   const { colors } = useTheme();
+  const { user } = useContext(UserContext);
 
   function handleNewOrder() {
     navigation.navigate("new");
@@ -56,12 +57,14 @@ export function Home() {
     const subscriber = firestore()
       .collection("orders")
       .where("status", "==", statusSelected)
+      .where("user_id", "==", user?.uid)
       .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => {
           const { patrimony, description, status, created_at } = doc.data();
 
           return {
             id: doc.id,
+            user_id: user?.uid,
             patrimony,
             description,
             status,

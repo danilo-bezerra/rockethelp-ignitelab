@@ -19,23 +19,29 @@ import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Link } from "../components/Link";
 
-export function SignIn() {
+export function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
 
   const { colors } = useTheme();
+
   const navigation = useNavigation();
 
-  function handleSignIn() {
+  function handleSignUp() {
     if (!email || !password) {
-      return Alert.alert("Entrar", "E-mail e senha devem ser informados");
+      return Alert.alert("Cadastrar", "E-mail e senha devem ser informados");
+    } else if (password != passwordConfirmation) {
+      return Alert.alert("Cadastrar", "As senhas informadas sãp diferentes");
     }
     setIsLoading(true);
 
     auth()
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response);
       })
@@ -44,18 +50,16 @@ export function SignIn() {
         setIsLoading(false);
 
         if (error.code == "auth/invalid-email") {
-          return Alert.alert("Entrar", "E-mail inválido.");
+          return Alert.alert("Registrar", "E-mail inválido.");
         }
 
-        if (error.code == "auth/user-not-found") {
-          return Alert.alert("Entrar", "E-mail e/ou senha inválidos.");
+        //auth/email-already-in-use
+
+        if (error.code == "auth/email-already-in-use") {
+          return Alert.alert("Registrar", "E-mail já cadastrado.");
         }
 
-        if (error.code == "auth/wrong-password") {
-          return Alert.alert("Entrar", "E-mail e/ou senha inválidos.");
-        }
-
-        return Alert.alert("Entrar", "Não foi possível acessar.");
+        return Alert.alert("Registar", "Não foi possível registrar.");
       });
   }
 
@@ -69,7 +73,7 @@ export function SignIn() {
     >
       <Logo />
       <Heading color="gray.100" fontSize="xl" mt={20} mb={6}>
-        Acesse sua conta
+        Cadastre sua conta
       </Heading>
 
       <Input
@@ -84,7 +88,7 @@ export function SignIn() {
       />
       <Input
         placeholder="Senha"
-        mb={8}
+        mb={4}
         InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
         value={password}
         onChangeText={setPassword}
@@ -105,15 +109,40 @@ export function SignIn() {
         secureTextEntry={!showPassword}
       />
 
+      <Input
+        placeholder="Confirme a senha"
+        mb={8}
+        InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
+        value={passwordConfirmation}
+        onChangeText={setPasswordConfirmation}
+        InputRightElement={
+          <IconButton
+            size={26}
+            icon={
+              showPasswordConfirmation ? (
+                <EyeClosed color={colors.gray[300]} />
+              ) : (
+                <Eye color={colors.gray[300]} />
+              )
+            }
+            mr={4}
+            onPress={() =>
+              setShowPasswordConfirmation(!showPasswordConfirmation)
+            }
+          />
+        }
+        secureTextEntry={!showPasswordConfirmation}
+      />
+
       <Button
         title="Entrar"
         w="full"
-        onPress={handleSignIn}
+        onPress={handleSignUp}
         isLoading={isLoading}
       />
 
-      <Link onPress={() => navigation.navigate("signup")} mt={4}>
-        Não tem uma conta? Cadastre-se
+      <Link onPress={() => navigation.navigate("signin")} mt={4}>
+        Já tem uma conta? Entre
       </Link>
     </VStack>
   );
