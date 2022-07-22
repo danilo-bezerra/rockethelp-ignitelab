@@ -11,6 +11,7 @@ export function Button({ title, ...rest }: Props) {
       h={14}
       fontSize="sm"
       rounded="sm"
+      w="full"
       _pressed={{
         bg: "darkBlue.500",
       }}

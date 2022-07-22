@@ -5,7 +5,8 @@ export declare global {
             new: undefined,
             details: { orderId: string},
             signin: undefined,
-            signup: undefined
+            signup: undefined,
+            profile: undefined
         }
     }
 }

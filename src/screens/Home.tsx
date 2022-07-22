@@ -21,7 +21,6 @@ import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
-import { UserContext } from "../contexts/UserContext";
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,6 @@ export function Home() {
 
   const navigation = useNavigation();
   const { colors } = useTheme();
-  const { user } = useContext(UserContext);
 
   function handleNewOrder() {
     navigation.navigate("new");
@@ -40,6 +38,10 @@ export function Home() {
 
   function handleOpenDetails(orderId) {
     navigation.navigate("details", { orderId });
+  }
+
+  function handleOpenProfile() {
+    navigation.navigate("profile");
   }
 
   function handleLogout() {
@@ -57,14 +59,14 @@ export function Home() {
     const subscriber = firestore()
       .collection("orders")
       .where("status", "==", statusSelected)
-      .where("user_id", "==", user?.uid)
+      .where("user_id", "==", auth().currentUser?.uid)
       .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => {
           const { patrimony, description, status, created_at } = doc.data();
 
           return {
             id: doc.id,
-            user_id: user?.uid,
+            user_id: auth().currentUser?.uid,
             patrimony,
             description,
             status,
@@ -95,7 +97,7 @@ export function Home() {
 
         <HStack>
           <IconButton
-            onPress={() => alert("Em breve")}
+            onPress={handleOpenProfile}
             icon={<UserCircle size={32} color={colors.gray[300]} />}
           />
 

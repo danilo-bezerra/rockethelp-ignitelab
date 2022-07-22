@@ -15,7 +15,7 @@ export function Input({ ...rest }: IInputProps) {
         borderColor: "darkBlue.600",
         bg: "darkBlue.900",
       }}
-      placeholderTextColor="darkBlue.300"
+      placeholderTextColor="darkBlue.100"
       {...rest}
     />
   );

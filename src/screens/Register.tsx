@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { Alert } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../contexts/UserContext";
+import auth from "@react-native-firebase/auth";
 
 export function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,6 @@ export function Register() {
   const [description, setDescription] = useState("");
 
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
 
   function handleNewOrderRegister() {
     if (!patrimony || !description) {
@@ -25,7 +24,7 @@ export function Register() {
     firestore()
       .collection("orders")
       .add({
-        user_id: user?.uid,
+        user_id: auth().currentUser?.uid,
         patrimony,
         description,
         status: "open",
